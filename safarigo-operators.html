@@ -290,6 +290,12 @@ nav{
   padding:40px 5% 0;
   position:relative;overflow:hidden;
 }
+.profile-hero-photo{
+  position:absolute;inset:0;
+  background-image:url('img-wildlife-crater.jpg');
+  background-size:cover;background-position:center 35%;
+  opacity:0.12;z-index:0;
+}
 .profile-hero::before{
   content:'';position:absolute;inset:0;
   background-image:radial-gradient(rgba(255,255,255,0.02) 1px,transparent 1px);
@@ -630,6 +636,7 @@ footer{background:var(--ink);padding:40px 5% 28px;}
       <div class="op-card" data-region="serengeti" data-badge="elite" onclick="openProfile('serengeti-trail')">
         <div class="op-card-banner">
           <div class="op-card-banner-bg" style="background:linear-gradient(135deg,#1A3C2E,#3D7A5F);"></div>
+          <img src="img-wildlife-crater.jpg" alt="Serengeti wildlife" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55;"/>
           <div class="op-card-banner-emoji">🦁</div>
           <div class="op-card-banner-badges">
             <div class="op-card-banner-badge bb-elite">✦ Elite Performer</div>
@@ -705,6 +712,7 @@ footer{background:var(--ink);padding:40px 5% 28px;}
       <div class="op-card" data-region="ngorongoro" data-badge="fleet" onclick="openProfile('serengeti-trail')">
         <div class="op-card-banner">
           <div class="op-card-banner-bg" style="background:linear-gradient(135deg,#3a2010,#7a4020);"></div>
+          <img src="img-ngorongoro-terrace.jpg" alt="Ngorongoro lodge terrace" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5;object-position:center 30%;"/>
           <div class="op-card-banner-emoji">🦏</div>
           <div class="op-card-banner-badges">
             <div class="op-card-banner-badge bb-fleet">✦ Top Fleet</div>
@@ -742,6 +750,7 @@ footer{background:var(--ink);padding:40px 5% 28px;}
       <div class="op-card" data-region="zanzibar" data-badge="verified" onclick="openProfile('serengeti-trail')">
         <div class="op-card-banner">
           <div class="op-card-banner-bg" style="background:linear-gradient(135deg,#0a2a40,#0d4a6e);"></div>
+          <img src="img-zanzibar-beach.webp" alt="Zanzibar beach" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5;object-position:center 40%;"/>
           <div class="op-card-banner-emoji">🏝️</div>
           <div class="op-card-banner-badges">
             <div class="op-card-banner-badge bb-verified">✓ Verified</div>
@@ -778,6 +787,7 @@ footer{background:var(--ink);padding:40px 5% 28px;}
       <div class="op-card" data-region="serengeti" data-badge="fleet" onclick="openProfile('serengeti-trail')">
         <div class="op-card-banner">
           <div class="op-card-banner-bg" style="background:linear-gradient(135deg,#2c1a08,#5a3a10);"></div>
+          <img src="img-zebra-flamingo.jpg" alt="Zebras and flamingos" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5;object-position:center 25%;"/>
           <div class="op-card-banner-emoji">🐘</div>
           <div class="op-card-banner-badges">
             <div class="op-card-banner-badge bb-fleet">✦ Top Fleet</div>
@@ -861,7 +871,8 @@ footer{background:var(--ink);padding:40px 5% 28px;}
 <div id="profile-view">
 
   <div class="profile-hero">
-    <div style="max-width:1100px;margin:0 auto;padding:0 5%;">
+    <div class="profile-hero-photo"></div>
+  <div style="max-width:1100px;margin:0 auto;padding:0 5%;position:relative;z-index:1;">
       <div class="profile-back" onclick="closeProfile()">← Back to All Operators</div>
       <div class="profile-identity">
         <div class="profile-logo">ST</div>
@@ -910,6 +921,7 @@ footer{background:var(--ink);padding:40px 5% 28px;}
               <div class="pkg-card" style="margin:16px 18px;">
                 <div class="pkg-banner">
                   <div class="pkg-banner-bg" style="background:linear-gradient(110deg,var(--green-deep),var(--earth));"></div>
+                  <img src="img-wildlife-crater.jpg" alt="Serengeti wildlife" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.45;object-position:center 40%;"/>
                   <div class="pkg-banner-price">
                     <div class="pkg-price-amount">$1,450</div>
                     <div class="pkg-price-per">per person</div>
@@ -972,6 +984,7 @@ footer{background:var(--ink);padding:40px 5% 28px;}
               <div class="pkg-card" style="margin:0 18px 16px;">
                 <div class="pkg-banner">
                   <div class="pkg-banner-bg" style="background:linear-gradient(110deg,#3a1a30,#6a2a50);"></div>
+                  <img src="img-zanzibar-beach.webp" alt="Zanzibar beach" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.4;object-position:center 50%;"/>
                   <div class="pkg-banner-price">
                     <div class="pkg-price-amount">$3,400</div>
                     <div class="pkg-price-per">per couple</div>

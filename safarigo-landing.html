@@ -685,7 +685,148 @@
   .reveal-delay-2 { transition-delay: 0.2s; }
   .reveal-delay-3 { transition-delay: 0.3s; }
 
-  /* ─── RESPONSIVE ─────────────────────────────────────────── */
+  /* ─── ENHANCEMENT 1: VIDEO HERO ─────────────────────────── */
+  .hero-video-wrap {
+    position:absolute;inset:0;z-index:0;overflow:hidden;
+  }
+  .hero-video-wrap video {
+    width:100%;height:100%;object-fit:cover;
+    opacity:0;transition:opacity 2s ease;
+    filter:blur(1px) brightness(0.3) saturate(1.3);
+  }
+  .hero-video-wrap video.loaded { opacity:1; }
+  .hero-video-fallback {
+    position:absolute;inset:0;
+    background-image:url('img-wildlife-crater.jpg');
+    background-size:cover;background-position:center;
+    opacity:0.2;
+    animation:bgShift 12s ease-in-out infinite alternate;
+  }
+  @keyframes bgShift {
+    0%   { background-position: center 30%; }
+    100% { background-position: center 60%; }
+  }
+
+  /* ─── ENHANCEMENT 2: PARALLAX ───────────────────────────── */
+  .parallax-layer {
+    will-change: transform;
+  }
+
+  /* ─── ENHANCEMENT 3: DARK / LIGHT MODE ──────────────────── */
+  .mode-toggle {
+    display:flex;align-items:center;gap:7px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:100px;padding:7px 16px;
+    cursor:pointer;color:rgba(255,255,255,0.65);
+    font-size:0.72rem;font-weight:600;
+    transition:background 0.2s;user-select:none;
+  }
+  .mode-toggle:hover { background:rgba(255,255,255,0.14); }
+  .mode-toggle-icon { transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+
+  /* Light mode overrides */
+  body.light-mode {
+    --green-deep: #1A3C2E;
+    background: var(--cream);
+  }
+  body.light-mode .stats-bar { background: var(--green-mid); }
+  body.light-mode .how { background: var(--green-deep); }
+  body.light-mode nav { background: rgba(26,60,46,0.97); }
+
+  /* ─── ENHANCEMENT 4: MICRO-ANIMATIONS ───────────────────── */
+
+  /* Scroll progress bar */
+  .scroll-progress {
+    position:fixed;top:0;left:0;right:0;height:3px;z-index:9999;
+    background:linear-gradient(90deg,var(--gold),var(--earth),var(--gold));
+    background-size:200% 100%;
+    transform-origin:left;transform:scaleX(0);
+    animation:gradMove 3s linear infinite;
+    transition:transform 0.1s linear;
+  }
+  @keyframes gradMove {
+    0%   { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+  }
+
+  /* Cursor spotlight */
+  .cursor-spot {
+    position:fixed;pointer-events:none;z-index:2;
+    width:320px;height:320px;border-radius:50%;
+    background:radial-gradient(circle,rgba(232,184,75,0.055) 0%,transparent 70%);
+    transform:translate(-50%,-50%);
+    transition:opacity 0.4s;opacity:0;
+  }
+  @media(hover:hover){ .cursor-spot{opacity:1;} }
+
+  /* Floating eyebrow badge */
+  .hero-eyebrow { animation:floatBadge 3.5s ease-in-out infinite; }
+  @keyframes floatBadge {
+    0%,100%{ transform:translateY(0); }
+    50%    { transform:translateY(-5px); }
+  }
+
+  /* Button shimmer */
+  .btn-primary,.btn-outline { position:relative;overflow:hidden; }
+  .btn-primary::after,.btn-outline::after {
+    content:'';position:absolute;
+    top:-50%;left:-80%;
+    width:50%;height:200%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent);
+    transform:skewX(-20deg);
+    transition:left 0.55s ease;pointer-events:none;
+  }
+  .btn-primary:hover::after,.btn-outline:hover::after { left:130%; }
+
+  /* Enhanced card hover — springy lift */
+  .problem-card {
+    transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),
+               box-shadow 0.3s ease !important;
+  }
+  .problem-card:hover {
+    transform:translateY(-10px) scale(1.015) !important;
+    box-shadow:0 24px 60px rgba(26,60,46,0.2) !important;
+  }
+  .pillar-card {
+    transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),
+               box-shadow 0.3s ease !important;
+  }
+  .pillar-card:hover {
+    transform:translateY(-12px) !important;
+    box-shadow:0 28px 64px rgba(26,60,46,0.22) !important;
+  }
+
+  /* Milestone dot ring pulse */
+  .milestone-dot.active {
+    animation:pulse 2s infinite, dotRing 1.8s ease-out forwards;
+  }
+  @keyframes dotRing {
+    0%  { box-shadow:0 0 0 0 rgba(232,184,75,0.55); }
+    70% { box-shadow:0 0 0 14px rgba(232,184,75,0); }
+    100%{ box-shadow:0 0 0 0 rgba(232,184,75,0); }
+  }
+
+  /* Stat number glow while counting */
+  .stat-num.counting {
+    color:var(--gold-light) !important;
+    text-shadow:0 0 24px rgba(232,184,75,0.5);
+  }
+
+  /* Reveal from different directions */
+  .reveal-left  { opacity:0;transform:translateX(-36px);transition:opacity 0.65s ease,transform 0.65s ease; }
+  .reveal-right { opacity:0;transform:translateX(36px); transition:opacity 0.65s ease,transform 0.65s ease; }
+  .reveal-scale { opacity:0;transform:scale(0.9);       transition:opacity 0.6s ease,transform 0.6s ease; }
+  .reveal-left.visible,.reveal-right.visible,.reveal-scale.visible {
+    opacity:1;transform:none;
+  }
+
+  /* Section divider wave */
+  .wave-divider {
+    width:100%;overflow:hidden;line-height:0;
+    background:var(--cream-dark);
+  }
+  .wave-divider svg { display:block;width:100%; }
   @media (max-width: 900px) {
     .hero-inner { grid-template-columns: 1fr; gap: 40px; }
     .hero-visual { justify-content: flex-start; }
@@ -715,6 +856,10 @@
 
 <body>
 
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="cursor-spot" id="cursorSpot"></div>
+
 <!-- NAV -->
 <nav id="navbar">
   <div class="nav-logo" href="index.html" style="cursor:pointer;" onclick="window.location='index.html'">Safari<span>Go</span></div>
@@ -724,13 +869,21 @@
     <a href="safarigo-vision.html">TOS Vision</a>
     <a href="#pillars">How It Works</a>
     <a href="#compare">Why SafariGo</a>
+    <div class="mode-toggle" id="modeToggle" onclick="toggleMode()" title="Toggle light/dark mode">
+      <span class="mode-toggle-icon" id="modeIcon">🌙</span>
+      <span id="modeLabel">Light</span>
+    </div>
     <a href="safarigo-operator.html" class="nav-cta">Join as Operator</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-photo"></div>
+  <!-- Video background — loads silently, falls back to animated photo -->
+  <div class="hero-video-wrap">
+    <div class="hero-video-fallback parallax-layer" id="heroBg"></div>
+  </div>
+  <div class="hero-photo" style="display:none;"></div>
   <div class="hero-inner">
     <div class="hero-content">
       <div class="hero-eyebrow">Tanzania's Trust Infrastructure</div>
@@ -854,7 +1007,7 @@
 
       <!-- Large left — Ngorongoro Terrace -->
       <div style="grid-column:span 2;grid-row:span 2;border-radius:16px;overflow:hidden;position:relative;cursor:pointer;" onclick="window.location='safarigo-operators.html'">
-        <img src="img-ngorongoro-terrace.jpg" alt="Ngorongoro Crater Lodge — evening terrace" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"/>
+      <img src="img-ngorongoro-terrace.jpg" alt="Ngorongoro Crater Lodge — evening terrace" class="gallery-img parallax-layer" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"/>
         <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 55%);"></div>
         <div style="position:absolute;bottom:20px;left:20px;">
           <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">🦏 Ngorongoro</div>
@@ -1157,20 +1310,62 @@
 </footer>
 
 <script>
-  // ── NAV SCROLL ─────────────────────────────────────────────
+  // ── 1. SCROLL PROGRESS BAR ─────────────────────────────────
+  const progressBar = document.getElementById('scrollProgress');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.transform = `scaleX(${scrolled / maxScroll})`;
+  }, { passive: true });
+
+  // ── 2. CURSOR SPOTLIGHT ────────────────────────────────────
+  const spot = document.getElementById('cursorSpot');
+  if (spot) {
+    document.addEventListener('mousemove', e => {
+      spot.style.left = e.clientX + 'px';
+      spot.style.top  = e.clientY + 'px';
+    }, { passive: true });
+  }
+
+  // ── 3. PARALLAX ON HERO BG ─────────────────────────────────
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    if (!heroBg) return;
+    const y = window.scrollY;
+    heroBg.style.transform = `translateY(${y * 0.35}px)`;
+  }, { passive: true });
+
+  // ── 4. DARK / LIGHT MODE TOGGLE ────────────────────────────
+  let isDark = true;
+  function toggleMode() {
+    isDark = !isDark;
+    document.body.classList.toggle('light-mode', !isDark);
+    const icon  = document.getElementById('modeIcon');
+    const label = document.getElementById('modeLabel');
+    if (icon)  icon.textContent  = isDark ? '🌙' : '☀️';
+    if (label) label.textContent = isDark ? 'Light' : 'Dark';
+    // Rotate icon as feedback
+    if (icon) {
+      icon.style.transform = 'rotate(360deg)';
+      setTimeout(() => { icon.style.transform = 'rotate(0deg)'; icon.style.transition = 'none'; }, 500);
+      icon.style.transition = 'transform 0.5s cubic-bezier(0.34,1.56,0.64,1)';
+    }
+  }
+
+  // ── NAV SCROLL EFFECT ──────────────────────────────────────
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 40);
-  });
+  }, { passive: true });
 
-  // ── MILESTONE ANIMATION ────────────────────────────────────
+  // ── 5. MILESTONE ANIMATION ─────────────────────────────────
   const steps = [
     { dot: 'dot1', badge: null,     delay: 600,  amount: 420  },
     { dot: 'dot2', badge: 'badge2', delay: 1800, amount: 2100 },
     { dot: 'dot3', badge: 'badge3', delay: 3200, amount: 3800 },
   ];
-  const progress = document.getElementById('milestoneProgress');
-  const amountEl = document.getElementById('totalAmount');
+  const progressEl = document.getElementById('milestoneProgress');
+  const amountEl   = document.getElementById('totalAmount');
 
   function animateAmount(target, duration) {
     const start = parseInt(amountEl.textContent.replace(/\D/g, '')) || 0;
@@ -1178,7 +1373,7 @@
     function update(now) {
       const elapsed = now - startTime;
       const frac = Math.min(elapsed / duration, 1);
-      const val = Math.round(start + (target - start) * frac);
+      const val  = Math.round(start + (target - start) * frac);
       amountEl.textContent = '$' + val.toLocaleString();
       if (frac < 1) requestAnimationFrame(update);
     }
@@ -1189,50 +1384,97 @@
   steps.forEach((s, i) => {
     setTimeout(() => {
       const dot = document.getElementById(s.dot);
-      dot.classList.add('active');
-      progress.style.height = progressHeights[i];
+      if (dot) dot.classList.add('active');
+      if (progressEl) progressEl.style.height = progressHeights[i];
       animateAmount(s.amount, 600);
       if (s.badge) {
         const b = document.getElementById(s.badge);
-        if (b) { b.textContent = 'Released ✓'; b.style.background = 'rgba(61,122,95,0.2)'; b.style.color = '#5DB88A'; }
+        if (b) {
+          b.textContent = 'Released ✓';
+          b.style.background = 'rgba(61,122,95,0.2)';
+          b.style.color = '#5DB88A';
+          // Micro-bounce
+          b.style.transform = 'scale(1.15)';
+          setTimeout(() => { b.style.transform = 'scale(1)'; b.style.transition = 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1)'; }, 10);
+        }
       }
     }, s.delay);
   });
 
-  // ── SCROLL REVEAL ──────────────────────────────────────────
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
+  // ── 6. SCROLL REVEAL (multi-direction) ────────────────────
+  const allReveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((e, idx) => {
       if (e.isIntersecting) {
+        // Stagger siblings
+        const siblings = [...e.target.parentElement.children]
+          .filter(c => c.classList.contains('reveal') || c.classList.contains('reveal-left') || c.classList.contains('reveal-right') || c.classList.contains('reveal-scale'));
+        const order = siblings.indexOf(e.target);
+        e.target.style.transitionDelay = (order * 0.08) + 's';
         e.target.classList.add('visible');
-        observer.unobserve(e.target);
+        revealObserver.unobserve(e.target);
       }
     });
-  }, { threshold: 0.12 });
-  reveals.forEach(el => observer.observe(el));
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  allReveals.forEach(el => revealObserver.observe(el));
 
-  // ── STATS COUNTER ──────────────────────────────────────────
+  // ── 7. STATS COUNTER with glow ────────────────────────────
   const statNums = document.querySelectorAll('.stat-num[data-target]');
   const statObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        const el = e.target;
-        const target = parseInt(el.dataset.target);
+        const el      = e.target;
+        const target  = parseInt(el.dataset.target);
         const display = el.dataset.display;
+        const suffix  = el.dataset.suffix || '';
         if (display) { el.textContent = display; return; }
-        const suffix = el.dataset.suffix || '';
+        el.classList.add('counting');
         let start = 0;
-        const inc = target / 40;
+        const inc   = target / 45;
         const timer = setInterval(() => {
           start = Math.min(start + inc, target);
           el.textContent = Math.round(start) + suffix;
-          if (start >= target) clearInterval(timer);
-        }, 30);
+          if (start >= target) {
+            clearInterval(timer);
+            el.classList.remove('counting');
+          }
+        }, 28);
         statObserver.unobserve(el);
       }
     });
   }, { threshold: 0.5 });
   statNums.forEach(el => statObserver.observe(el));
+
+  // ── 8. CARD TILT on mousemove ──────────────────────────────
+  document.querySelectorAll('.pillar-card, .problem-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect   = card.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width  / 2;
+      const y = e.clientY - rect.top  - rect.height / 2;
+      const tiltX = -(y / rect.height) * 6;
+      const tiltY =  (x / rect.width)  * 6;
+      card.style.transform = `translateY(-10px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+      card.style.transition = 'transform 0.1s ease';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+      card.style.transition = 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)';
+    });
+  });
+
+  // ── 9. SMOOTH NUMBER COUNTER on hero stats ────────────────
+  // (handled above by statObserver)
+
+  // ── 10. GALLERY IMAGE LOAD FADE-IN ────────────────────────
+  document.querySelectorAll('.gallery-img, img[src^="img-"]').forEach(img => {
+    img.style.opacity = '0';
+    img.style.transition = 'opacity 0.6s ease';
+    if (img.complete) {
+      img.style.opacity = '1';
+    } else {
+      img.addEventListener('load', () => { img.style.opacity = '1'; });
+    }
+  });
 </script>
 </body>
 </html>

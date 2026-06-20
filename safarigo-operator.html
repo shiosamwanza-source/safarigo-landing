@@ -325,9 +325,28 @@
   }
   .success-step-text { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.55; }
   .success-step-text strong { color: var(--ink); display: block; margin-bottom: 2px; }
+
+/* ── OPERATOR PORTAL MICRO-ANIMATIONS ──────────────── */
+.scroll-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:9999;background:linear-gradient(90deg,var(--gold),var(--earth),var(--gold));background-size:200%;transform-origin:left;transform:scaleX(0);animation:gm 3s linear infinite;}
+@keyframes gm{0%{background-position:0%;}100%{background-position:200%;}}
+.cursor-spot{position:fixed;pointer-events:none;z-index:2;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(26,60,46,0.05) 0%,transparent 70%);transform:translate(-50%,-50%);transition:opacity .4s;opacity:0;}
+@media(hover:hover){.cursor-spot{opacity:1;}}
+.form-panel{animation:panelIn 0.35s cubic-bezier(0.34,1.2,0.64,1);}
+@keyframes panelIn{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+.checkbox-item{transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1),border-color 0.15s,background 0.15s !important;}
+.checkbox-item:hover{transform:scale(1.02) !important;}
+.btn-next,.btn-submit{position:relative;overflow:hidden;}
+.btn-next::after,.btn-submit::after{content:'';position:absolute;top:-50%;left:-80%;width:50%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transform:skewX(-20deg);transition:left 0.5s ease;pointer-events:none;}
+.btn-next:hover::after,.btn-submit:hover::after{left:130%;}
+.step-tab{transition:all 0.25s ease !important;}
+.step-tab.active .step-num{animation:stepPop 0.4s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes stepPop{0%{transform:scale(0.7);}100%{transform:scale(1);}}
+input:focus,select:focus,textarea:focus{transition:border-color 0.2s,box-shadow 0.2s,transform 0.2s !important;transform:scale(1.01) !important;}
 </style>
 </head>
 <body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="cursor-spot" id="cursorSpot"></div>
 
 <nav>
   <div class="nav-logo" href="index.html" style="cursor:pointer;" onclick="window.location='index.html'">Safari<span>Go</span></div>
@@ -841,6 +860,30 @@
     zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
     zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
     zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag-over'); });
+  });
+
+  // ── SCROLL PROGRESS ──────────────────────────────────────
+  const prog = document.getElementById('scrollProgress');
+  window.addEventListener('scroll', () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if(prog && max > 0) prog.style.transform = `scaleX(${window.scrollY / max})`;
+  }, {passive:true});
+
+  // ── CURSOR SPOTLIGHT ──────────────────────────────────────
+  const spot = document.getElementById('cursorSpot');
+  document.addEventListener('mousemove', e => {
+    if(spot){ spot.style.left = e.clientX+'px'; spot.style.top = e.clientY+'px'; }
+  }, {passive:true});
+
+  // ── FORM FIELD FOCUS RIPPLE ───────────────────────────────
+  document.querySelectorAll('input, select, textarea').forEach(el => {
+    el.addEventListener('focus', () => {
+      el.parentElement.style.transform = 'scale(1.01)';
+      el.parentElement.style.transition = 'transform 0.2s cubic-bezier(0.34,1.56,0.64,1)';
+    });
+    el.addEventListener('blur', () => {
+      el.parentElement.style.transform = '';
+    });
   });
 </script>
 </body>
